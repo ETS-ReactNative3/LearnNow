@@ -6,7 +6,7 @@ import { Container, NextButton, ButtonText } from "./TutorialStyled";
 import Welcome from "./Welcome/Welcome";
 import { Search, Filter } from "./Instruction/Instruction";
 
-const Tutorial = () => {
+const Tutorial = props => {
   const [page, setPage] = useState(0);
   return (
     <Container>
@@ -38,7 +38,7 @@ const Tutorial = () => {
       <NextButton
         activeOpacity={0.7}
         pagePos={page}
-        onPress={() => console.log(page)}
+        onPress={() => props.navigation.navigate("HomeScreen")}
       >
         <ButtonText pagePos={page}>Got it!</ButtonText>
       </NextButton>
