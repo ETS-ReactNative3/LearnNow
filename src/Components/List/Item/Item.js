@@ -12,7 +12,6 @@ import {
 } from "./ItemStyled";
 
 const Item = ({ item }) => {
-  console.log(item);
   return (
     <Container width={Dimensions.get("window").width}>
       {item.image_125_H ? (
