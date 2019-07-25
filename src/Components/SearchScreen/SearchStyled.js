@@ -4,6 +4,12 @@ export const Container = styled.View`
   flex: 1;
 `;
 
+export const OptionView = styled.View`
+  width: ${props => props.width};
+  height: 50;
+  flex-flow: row;
+`;
+
 export const SearchView = styled.View`
   width: ${props => props.width};
   border: 1px solid #dadada;

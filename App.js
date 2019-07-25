@@ -31,7 +31,6 @@ const LearnNowApp = createStackNavigator({
       headerLeft: null,
       headerRight: (
         <HeaderRight
-          Home={true}
           navigate={screen => NavigateToScreen(navigation, screen)}
         />
       )
@@ -39,15 +38,9 @@ const LearnNowApp = createStackNavigator({
   },
   SearchScreen: {
     screen: Search,
-    navigationOptions: ({ navigation }) => ({
-      title: "Search",
-      headerRight: (
-        <HeaderRight
-          Filter={true}
-          navigate={screen => NavigateToScreen(navigation, screen)}
-        />
-      )
-    })
+    navigationOptions: {
+      title: "Search"
+    }
   },
   TipsScreen: {
     screen: Tips,

@@ -14,7 +14,7 @@ export const NextButton = styled.TouchableOpacity`
   position: relative;
   justify-content: center;
   align-items: center;
-  height: 50;
+  height: 60;
 `;
 
 export const ButtonText = styled.Text`

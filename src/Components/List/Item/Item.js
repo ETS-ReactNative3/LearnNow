@@ -1,9 +1,9 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import { Dimensions, TouchableWithoutFeedback } from "react-native";
 import {
   Container,
   ItemImage,
-  RightSection,
+  DescBottom,
   TopSection,
   BottomSection,
   Title,
@@ -11,22 +11,33 @@ import {
   PaidFree
 } from "./ItemStyled";
 
-const Item = ({ item }) => {
+const Item = ({ item, navigate }) => {
+  const width = Dimensions.get("window").width;
   return (
-    <Container width={Dimensions.get("window").width}>
-      {item.image_125_H ? (
-        <ItemImage source={{ uri: `${item.image_125_H}` }} resizeMode="cover" />
-      ) : null}
-      <RightSection>
-        <TopSection>
-          <Title numberOfLines={1}>{item.title}</Title>
-          <Instructor>{item.visible_instructors[0].display_name}</Instructor>
-        </TopSection>
-        <BottomSection>
-          <PaidFree>{item.is_paid ? "Paid" : "Free"}</PaidFree>
-        </BottomSection>
-      </RightSection>
-    </Container>
+    <TouchableWithoutFeedback onPress={() => navigate("DetailScreen", item)}>
+      <Container width={width}>
+        {item.image_480x270 ? (
+          <ItemImage
+            width={width}
+            source={{ uri: `${item.image_480x270}` }}
+            resizeMode="cover"
+          />
+        ) : null}
+        <DescBottom width={width}>
+          <TopSection>
+            <Title>{item.title}</Title>
+            <Instructor>{`By: ${
+              item.visible_instructors[0].display_name
+            }`}</Instructor>
+          </TopSection>
+          <BottomSection>
+            <PaidFree>
+              {item.is_paid ? `Paid - ${item.price}` : "Free"}
+            </PaidFree>
+          </BottomSection>
+        </DescBottom>
+      </Container>
+    </TouchableWithoutFeedback>
   );
 };
 

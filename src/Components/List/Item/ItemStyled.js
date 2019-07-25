@@ -2,34 +2,38 @@ import styled from "styled-components";
 
 export const Container = styled.View`
   width: ${props => props.width};
-  height: 100;
-  border-bottom-width: 1px;
-  border-bottom-color: rgba(0, 0, 0, 0.1);
+  height: 300;
   flex-flow: row;
+  position: relative;
 `;
 
 export const ItemImage = styled.Image`
-  height: 100;
-  width: 125;
+  width: ${props => props.width};
+  height: 300;
+  position: absolute;
 `;
 
-export const RightSection = styled.View`
+export const DescBottom = styled.View`
+  width: ${props => props.width};
   flex: 1;
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.85);
+  padding: 5px;
 `;
 
 export const TopSection = styled.View`
-  flex: 3;
-  padding: 0 5px;
+  flex: 1;
   justify-content: center;
 `;
 
 export const BottomSection = styled.View`
   flex: 1;
-  padding: 0 5px;
 `;
 
 export const Title = styled.Text`
   font-weight: 700;
+  font-size: 14;
   color: #0f0f0f;
 `;
 
@@ -40,7 +44,7 @@ export const Instructor = styled.Text`
 
 export const PaidFree = styled.Text`
   text-transform: uppercase;
-  color: rgba(0, 0, 0, 0.5);
+  font-weight: 500;
+  color: #0f0f0f;
   align-self: flex-end;
-  padding: 0 5px;
 `;
