@@ -8,6 +8,7 @@ import {
 import Tutorial from "./src/Components/Tutorial/Tutorial";
 import Home from "./src/Components/HomeScreen/Home";
 import Search from "./src/Components/SearchScreen/Search";
+import UdemyDetail from "./src/Components/UdemyDetail/Detail";
 import Tips from "./src/Components/Tips/Tips";
 import HeaderRight from "./src/Components/Header/Header";
 
@@ -41,6 +42,13 @@ const LearnNowApp = createStackNavigator({
     navigationOptions: {
       title: "Search"
     }
+  },
+  UdemyDetailScreen: {
+    screen: UdemyDetail,
+    navigationOptions: () => ({
+      headerLeft: null,
+      headerTransparent: true
+    })
   },
   TipsScreen: {
     screen: Tips,

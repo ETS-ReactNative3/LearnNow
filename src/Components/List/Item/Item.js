@@ -1,8 +1,9 @@
 import React from "react";
-import { Dimensions, TouchableWithoutFeedback } from "react-native";
+import { Dimensions, TouchableWithoutFeedback, StyleSheet } from "react-native";
 import {
   Container,
   ItemImage,
+  UdemyLogo,
   DescBottom,
   TopSection,
   BottomSection,
@@ -11,17 +12,22 @@ import {
   PaidFree
 } from "./ItemStyled";
 
-const Item = ({ item, navigate }) => {
+const Item = ({ item, navigate, source }) => {
   const width = Dimensions.get("window").width;
   return (
-    <TouchableWithoutFeedback onPress={() => navigate("DetailScreen", item)}>
-      <Container width={width}>
+    <TouchableWithoutFeedback
+      onPress={() => navigate("UdemyDetailScreen", item)}
+    >
+      <Container width={width} style={styles.shadow}>
         {item.image_480x270 ? (
           <ItemImage
             width={width}
             source={{ uri: `${item.image_480x270}` }}
             resizeMode="cover"
           />
+        ) : null}
+        {source === "udemy" ? (
+          <UdemyLogo source={require("../../../../assets/udemyLogo.png")} />
         ) : null}
         <DescBottom width={width}>
           <TopSection>
@@ -40,5 +46,19 @@ const Item = ({ item, navigate }) => {
     </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 1,
+    shadowRadius: 8,
+
+    elevation: 8
+  }
+});
 
 export default Item;

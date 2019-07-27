@@ -17,101 +17,60 @@ import {
   SearchButton,
   ButtonText
 } from "./SearchStyled";
+import { UdemySearch, MoreUdemyRes } from "../../Util/CallUdemy";
 import ListItem from "../List/Item/Item";
-
 const Search = props => {
-  const clientId = "do6tRQVYNrytixmIvTJT8dx2t7gszt3G7j2IT3v0";
-  const clientSecret =
-    "2D6cFPcS4DSgifQoNq492m3FYD5qYWHW1qnbIlJACTQ5jSgYMiXpo61ErBN2jhcShXcKJJhFoTjAaMJqpa2JLty14rcuCgKOqQRKMn0bNsmzR0HeWSZNByFjDPcexPzD";
-  const authHeader = {
-    Accept: "application/json, text/plain, */*",
-    Authorization: `Basic ${Base64.encode(`${clientId}:${clientSecret}`)}`,
-    "Content-Type": "application/json;charset=utf-8"
-  };
-
   const [searchTerm, setSearchTerm] = useState("");
   const [youtubeRes, setYoutubeRes] = useState([]);
   const [udemyRes, setUdemyRes] = useState([]);
 
-  const [source, setSource] = useState("all");
+  const [source, setSource] = useState("udemy");
   const [price, setPrice] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const searchInputHandler = val => {
     setSearchTerm(val);
   };
-  const searchButtonHandler = () => {
+
+  const getResult = () => {
     switch (source) {
       case "udemy":
-        getUdemyResult();
+        setUdemyRes([]);
+        if (searchTerm) {
+          UdemySearch(searchTerm, price).then(res => setUdemyRes(res));
+        } else {
+          Alert.alert("Search Term", "Please enter a search term!", [
+            { text: "Ok" }
+          ]);
+        }
         break;
       case "youtube":
         break;
-      case "all":
-        getUdemyResult();
+      default:
         break;
     }
   };
-  const getUdemyResult = () => {
-    setUdemyRes([]);
-    axios
-      .get(
-        `https://www.udemy.com/api-2.0/courses/?search=${searchTerm}&page_size=15&price=${price}`,
-        {
-          headers: authHeader
-        }
-      )
-      .then(res => {
-        res.data.results.map(course => {
-          if (course._class === "course") {
-            setUdemyRes(prevState => {
-              return [...prevState, course];
-            });
-          }
-        });
-      })
-      .catch(err => {
-        Alert.alert("Network Problem", "Oh no! Something is wrong!", [
-          { text: "Try Again" }
-        ]);
-      });
-  };
 
-  const getMoreUdemyResult = () => {
+  const getMoreResult = () => {
     if (loading === false) {
       setLoading(true);
-      axios
-        .get(
-          `https://www.udemy.com/api-2.0/courses/?search=${searchTerm}&page_size=15&page=${udemyRes.length /
-            15}&price=${price}`,
-          {
-            headers: authHeader
-          }
-        )
-        .then(res => {
-          res.data.results.map(course => {
-            if (course._class === "course") {
+      switch (source) {
+        case "udemy":
+          MoreUdemyRes(searchTerm, price, udemyRes.length / 15 + 1)
+            .then(res => {
               setUdemyRes(prevState => {
-                return [...prevState, course];
+                return [...prevState, ...res];
               });
-            }
-          });
-        })
-        .then(() => {
-          setLoading(false);
-        });
-    }
-  };
-
-  const sourcePicker = val => {
-    setSource(val);
-    switch (source) {
-      case "udemy":
-        break;
-      case "youtube":
-        break;
-      case "all":
-        break;
+            })
+            .then(() => {
+              setLoading(false);
+            });
+          break;
+        case "youtube":
+          break;
+        default:
+          break;
+      }
     }
   };
 
@@ -125,7 +84,7 @@ const Search = props => {
         <SearchButton
           width={Dimensions.get("window").width}
           activeOpacity={0.75}
-          onPress={searchButtonHandler}
+          onPress={getResult}
         >
           <ButtonText>Search</ButtonText>
         </SearchButton>
@@ -134,11 +93,10 @@ const Search = props => {
         <Picker
           style={{ height: 50, flex: 1 }}
           selectedValue={source}
-          onValueChange={(val, index) => sourcePicker(source)}
+          onValueChange={(val, index) => setSource(val)}
         >
           <Picker.Item label="Udemy" value="udemy" />
           <Picker.Item label="YouTube" value="youtube" />
-          <Picker.Item label="All" value="all" />
         </Picker>
         <Picker
           style={{ height: 50, flex: 1 }}
@@ -155,21 +113,25 @@ const Search = props => {
           <FlatList
             data={udemyRes}
             renderItem={({ item }) => (
-              <ListItem item={item} navigate={props.navigation.navigate} />
+              <ListItem
+                item={item}
+                navigate={props.navigation.navigate}
+                source={source}
+              />
             )}
             keyExtractor={(item, index) => index.toString()}
             onEndReachedThreshold={0.025}
-            onEndReached={getMoreUdemyResult}
-          />
-        ) : null}
-        {loading ? (
-          <ActivityIndicator
-            size="large"
-            color="#0494c4"
-            style={{ marginTop: 10, marginBottom: 10 }}
+            onEndReached={getMoreResult}
           />
         ) : null}
       </View>
+      {loading ? (
+        <ActivityIndicator
+          size="large"
+          color="#0494c4"
+          style={{ marginTop: 10, marginBottom: 10 }}
+        />
+      ) : null}
     </Container>
   );
 };
