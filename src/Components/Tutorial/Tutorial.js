@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: "stretch"
   },
   indicatorLift: {
-    height: 25,
+    height: 20,
     width: Dimensions.get("window").width
   }
 });

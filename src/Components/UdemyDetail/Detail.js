@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import StarRating from "react-native-star-rating";
-import { Dimensions, StyleSheet, Linking, Alert } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  Linking,
+  Alert,
+  ScrollView
+} from "react-native";
 import axios from "axios";
 import {
   Container,
@@ -28,7 +34,6 @@ import {
 const UdemyDetail = item => {
   const { width, height } = Dimensions.get("window");
   const course = item.navigation.state.params;
-  console.log(course);
   const [headline, setHeadLine] = useState(null);
   const [numReviews, setNumReviews] = useState(0);
   const [numSubs, setNumSubs] = useState(0);
@@ -52,7 +57,7 @@ const UdemyDetail = item => {
     return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
   };
   return (
-    <Container>
+    <Container style={{ flex: 1 }}>
       <CourseImage
         source={{ uri: `${course.image_480x270}` }}
         width={width}

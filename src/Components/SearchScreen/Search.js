@@ -18,12 +18,15 @@ import {
   ButtonText
 } from "./SearchStyled";
 import { UdemySearch, MoreUdemyRes } from "../../Util/CallUdemy";
-import ListItem from "../List/Item/Item";
+import { YoutubeSearch, MoreYoutubeRes } from "../../Util/CallYoutube";
+import UdemyItem from "../List/UdemyItem/Item";
+import YoutubeItem from "../List/YoutubeItem/Item";
+
 const Search = props => {
   const [searchTerm, setSearchTerm] = useState("");
   const [youtubeRes, setYoutubeRes] = useState([]);
+  const [youtubeToken, setYoutubeToken] = useState("");
   const [udemyRes, setUdemyRes] = useState([]);
-
   const [source, setSource] = useState("udemy");
   const [price, setPrice] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,21 +36,28 @@ const Search = props => {
   };
 
   const getResult = () => {
-    switch (source) {
-      case "udemy":
-        setUdemyRes([]);
-        if (searchTerm) {
+    if (searchTerm) {
+      switch (source) {
+        case "udemy":
+          setUdemyRes([]);
           UdemySearch(searchTerm, price).then(res => setUdemyRes(res));
-        } else {
-          Alert.alert("Search Term", "Please enter a search term!", [
-            { text: "Ok" }
-          ]);
-        }
-        break;
-      case "youtube":
-        break;
-      default:
-        break;
+          break;
+        case "youtube":
+          setYoutubeRes([]);
+          setYoutubeToken("");
+          YoutubeSearch(searchTerm).then(res => {
+            console.log(res);
+            setYoutubeRes(res.result);
+            setYoutubeToken(res.nextPageToken);
+          });
+          break;
+        default:
+          break;
+      }
+    } else {
+      Alert.alert("Search Term", "Please enter a search term!", [
+        { text: "Ok" }
+      ]);
     }
   };
 
@@ -67,6 +77,17 @@ const Search = props => {
             });
           break;
         case "youtube":
+          MoreYoutubeRes(searchTerm, youtubeToken)
+            .then(res => {
+              console.log(res);
+              setYoutubeRes(prevState => {
+                return [...prevState, ...res.result];
+              });
+              setYoutubeToken(res.nextPageToken);
+            })
+            .then(() => {
+              setLoading(false);
+            });
           break;
         default:
           break;
@@ -93,7 +114,14 @@ const Search = props => {
         <Picker
           style={{ height: 50, flex: 1 }}
           selectedValue={source}
-          onValueChange={(val, index) => setSource(val)}
+          onValueChange={(val, index) => {
+            setSource(val);
+            if (val === "udemy") {
+              setPrice(null);
+            } else if (val === "youtube") {
+              setPrice("price-free");
+            }
+          }}
         >
           <Picker.Item label="Udemy" value="udemy" />
           <Picker.Item label="YouTube" value="youtube" />
@@ -102,6 +130,7 @@ const Search = props => {
           style={{ height: 50, flex: 1 }}
           selectedValue={price}
           onValueChange={(val, index) => setPrice(val)}
+          enabled={source === "udemy" ? true : false}
         >
           <Picker.Item label="Paid" value="price-paid" />
           <Picker.Item label="Free" value="price-free" />
@@ -111,14 +140,14 @@ const Search = props => {
       <View style={{ flex: 1 }}>
         {udemyRes.length !== 0 || udemyRes !== [] ? (
           <FlatList
-            data={udemyRes}
-            renderItem={({ item }) => (
-              <ListItem
-                item={item}
-                navigate={props.navigation.navigate}
-                source={source}
-              />
-            )}
+            data={source === "udemy" ? udemyRes : youtubeRes}
+            renderItem={({ item }) =>
+              source === "udemy" ? (
+                <UdemyItem item={item} navigate={props.navigation.navigate} />
+              ) : (
+                <YoutubeItem item={item} />
+              )
+            }
             keyExtractor={(item, index) => index.toString()}
             onEndReachedThreshold={0.025}
             onEndReached={getMoreResult}

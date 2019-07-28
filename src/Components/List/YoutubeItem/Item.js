@@ -1,46 +1,48 @@
 import React from "react";
-import { Dimensions, TouchableWithoutFeedback, StyleSheet } from "react-native";
+import {
+  Dimensions,
+  TouchableWithoutFeedback,
+  StyleSheet,
+  Linking
+} from "react-native";
 import {
   Container,
   ItemImage,
-  UdemyLogo,
+  YoutubeLogo,
   DescBottom,
   TopSection,
   BottomSection,
   Title,
-  Instructor,
-  PaidFree
+  NameDate
 } from "./ItemStyled";
 
-const Item = ({ item, navigate, source }) => {
+const Item = ({ item }) => {
   const width = Dimensions.get("window").width;
   return (
     <TouchableWithoutFeedback
-      onPress={() => navigate("UdemyDetailScreen", item)}
+      onPress={() => {
+        Linking.openURL(`https://www.youtube.com/watch?v=${item.videoId}`);
+      }}
     >
       <Container width={width} style={styles.shadow}>
-        {item.image_480x270 ? (
+        {item.image ? (
           <ItemImage
             width={width}
-            source={{ uri: `${item.image_480x270}` }}
+            source={{ uri: `${item.image.url}` }}
             resizeMode="cover"
           />
         ) : null}
-        {source === "udemy" ? (
-          <UdemyLogo source={require("../../../../assets/udemyLogo.png")} />
-        ) : null}
+        <YoutubeLogo
+          source={require("../../../../assets/youtubeLogo.png")}
+          resizeMode="contain"
+        />
         <DescBottom width={width}>
           <TopSection>
             <Title>{item.title}</Title>
-            <Instructor>{`By: ${
-              item.visible_instructors[0].display_name
-            }`}</Instructor>
+            <NameDate>Uploaded By: {item.channelTitle}</NameDate>
+            <NameDate>Uploaded On: {item.date}</NameDate>
           </TopSection>
-          <BottomSection>
-            <PaidFree>
-              {item.is_paid ? `Paid - ${item.price}` : "Free"}
-            </PaidFree>
-          </BottomSection>
+          <BottomSection />
         </DescBottom>
       </Container>
     </TouchableWithoutFeedback>

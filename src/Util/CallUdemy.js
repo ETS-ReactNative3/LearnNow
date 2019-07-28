@@ -19,13 +19,7 @@ export const UdemySearch = (term, price) => {
       }
     )
     .then(res => {
-      let result = [];
-      res.data.results.map(course => {
-        if (course._class === "course") {
-          result.push(course);
-        }
-      });
-      return result;
+      return PrepareData(res.data);
     })
     .catch(err => {
       Alert.alert("Network Problem", "Oh no! Something is wrong!", [
@@ -43,12 +37,21 @@ export const MoreUdemyRes = (term, price, page) => {
       }
     )
     .then(res => {
-      let result = [];
-      res.data.results.map(course => {
-        if (course._class === "course") {
-          result.push(course);
-        }
-      });
-      return result;
+      return PrepareData(res.data);
+    })
+    .catch(err => {
+      Alert.alert("Network Problem", "Oh no! Something is wrong!", [
+        { text: "Try Again" }
+      ]);
     });
+};
+
+const PrepareData = data => {
+  let result = [];
+  data.results.map(course => {
+    if (course._class === "course") {
+      result.push(course);
+    }
+  });
+  return result;
 };

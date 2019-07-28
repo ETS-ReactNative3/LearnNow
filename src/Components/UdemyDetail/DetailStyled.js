@@ -12,7 +12,7 @@ export const CourseImage = styled.Image`
 `;
 
 export const BodyView = styled.View`
-  flex: 1.5;
+  flex: 1.8;
   width: ${props => props.width - 20};
   margin: 10px;
   padding: 20px;
@@ -23,13 +23,13 @@ export const BodyView = styled.View`
 export const Title = styled.Text`
   font-size: 17;
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `;
 
 export const InfoBox = styled.View`
   flex-flow: row;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 
 export const SubReview = styled.View`
@@ -37,7 +37,7 @@ export const SubReview = styled.View`
 `;
 
 export const SubReviewText = styled.Text`
-  margin-left: 15px;
+  margin-left: 10px;
   font-size: 12;
 `;
 
@@ -56,8 +56,8 @@ export const InsView = styled.View`
 `;
 
 export const InsImg = styled.Image`
-  width: 50;
-  height: 50;
+  width: 40;
+  height: 40;
 `;
 
 export const InsInfo = styled.View`
@@ -88,7 +88,7 @@ export const PriceView = styled.View`
   justify-content: center;
   align-items: center;
   background-color: white;
-  height: 60;
+  height: 50;
   border-bottom-left-radius: 20px;
 `;
 
@@ -104,7 +104,7 @@ export const LinkBtn = styled.TouchableOpacity`
   flex: 1;
   justify-content: center;
   align-items: center;
-  height: 60;
+  height: 50;
   border-bottom-right-radius: 20px;
   background-color: #ff5757;
 `;
