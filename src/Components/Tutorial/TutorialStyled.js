@@ -9,8 +9,8 @@ export const Container = styled.View`
 
 export const NextButton = styled.TouchableOpacity`
   background-color: ${props =>
-    props.pagePos === 2 ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0)"};
-  z-index: ${props => (props.pagePos === 2 ? 1 : -1)};
+    props.pagePos === 1 ? "rgba(0, 0, 0, 0.5)" : "rgba(0, 0, 0, 0)"};
+  z-index: ${props => (props.pagePos === 1 ? 1 : -1)};
   position: relative;
   justify-content: center;
   align-items: center;
@@ -21,5 +21,5 @@ export const ButtonText = styled.Text`
   color: #66cefa;
   font-size: 18;
   text-transform: uppercase;
-  opacity: ${props => (props.pagePos === 2 ? "1" : "0")};
+  opacity: ${props => (props.pagePos === 1 ? "1" : "0")};
 `;

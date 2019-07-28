@@ -6,7 +6,6 @@ import {
   createAppContainer
 } from "react-navigation";
 import Tutorial from "./src/Components/Tutorial/Tutorial";
-import Home from "./src/Components/HomeScreen/Home";
 import Search from "./src/Components/SearchScreen/Search";
 import UdemyDetail from "./src/Components/UdemyDetail/Detail";
 import Tips from "./src/Components/Tips/Tips";
@@ -17,8 +16,8 @@ const App = () => {
 };
 
 const LearnNowApp = createStackNavigator({
-  HomeScreen: {
-    screen: Home,
+  SearchScreen: {
+    screen: Search,
     navigationOptions: ({ navigation }) => ({
       headerTitle: (
         <View style={styles.HeaderView}>
@@ -36,12 +35,6 @@ const LearnNowApp = createStackNavigator({
         />
       )
     })
-  },
-  SearchScreen: {
-    screen: Search,
-    navigationOptions: {
-      title: "Search"
-    }
   },
   UdemyDetailScreen: {
     screen: UdemyDetail,

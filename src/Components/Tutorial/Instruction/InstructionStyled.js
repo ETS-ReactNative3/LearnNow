@@ -8,7 +8,8 @@ export const Container = styled.View`
 `;
 
 export const Image = styled.Image`
-  flex: 4.5;
+  flex: 4;
+  margin-bottom: 30px;
 `;
 
 export const Title = styled.Text`

@@ -4,7 +4,7 @@ import { Video } from "expo-av";
 import { IndicatorViewPager, PagerDotIndicator } from "rn-viewpager";
 import { Container, NextButton, ButtonText } from "./TutorialStyled";
 import Welcome from "./Welcome/Welcome";
-import { Search, Filter } from "./Instruction/Instruction";
+import { Search } from "./Instruction/Instruction";
 
 const Tutorial = props => {
   const [page, setPage] = useState(0);
@@ -30,15 +30,12 @@ const Tutorial = props => {
         <View>
           <Search />
         </View>
-        <View>
-          <Filter />
-        </View>
       </IndicatorViewPager>
       <View style={styles.indicatorLift} />
       <NextButton
         activeOpacity={0.7}
         pagePos={page}
-        onPress={() => props.navigation.navigate("HomeScreen")}
+        onPress={() => props.navigation.navigate("SearchScreen")}
       >
         <ButtonText pagePos={page}>Got it!</ButtonText>
       </NextButton>
@@ -47,7 +44,7 @@ const Tutorial = props => {
 };
 
 const _renderDotIndicator = () => {
-  return <PagerDotIndicator pageCount={3} />;
+  return <PagerDotIndicator pageCount={2} />;
 };
 
 const styles = StyleSheet.create({

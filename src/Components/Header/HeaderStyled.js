@@ -12,11 +12,6 @@ export const Button = styled.TouchableOpacity`
   padding: 5px;
 `;
 
-export const BtnImage = styled.Image`
-  width: 20px;
-  height: 20px;
-`;
-
 export const BtnText = styled.Text`
   font-size: 16;
 `;

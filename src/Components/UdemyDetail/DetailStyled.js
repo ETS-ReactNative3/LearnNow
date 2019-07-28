@@ -63,7 +63,7 @@ export const InsImg = styled.Image`
 export const InsInfo = styled.View`
   flex: 1;
   justify-content: center;
-  margin-left: 10px;
+  margin-left: 5px;
 `;
 
 export const InsName = styled.Text`
@@ -71,7 +71,7 @@ export const InsName = styled.Text`
 `;
 
 export const InsJobTitle = styled.Text`
-  font-size: 9;
+  font-size: 10;
 `;
 
 export const BottomView = styled.View`
