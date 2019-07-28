@@ -1,12 +1,10 @@
 import axios from "axios";
+import { CLIENT_ID, CLIENT_SECRET } from "react-native-dotenv";
 import { Alert } from "react-native";
 
-const clientId = "do6tRQVYNrytixmIvTJT8dx2t7gszt3G7j2IT3v0";
-const clientSecret =
-  "2D6cFPcS4DSgifQoNq492m3FYD5qYWHW1qnbIlJACTQ5jSgYMiXpo61ErBN2jhcShXcKJJhFoTjAaMJqpa2JLty14rcuCgKOqQRKMn0bNsmzR0HeWSZNByFjDPcexPzD";
 const authHeader = {
   Accept: "application/json, text/plain, */*",
-  Authorization: `Basic ${Base64.encode(`${clientId}:${clientSecret}`)}`,
+  Authorization: `Basic ${Base64.encode(`${CLIENT_ID}:${CLIENT_SECRET}`)}`,
   "Content-Type": "application/json;charset=utf-8"
 };
 

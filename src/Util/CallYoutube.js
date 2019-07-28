@@ -1,7 +1,8 @@
 import axios from "axios";
+import { API_KEY } from "react-native-dotenv";
 import { Alert } from "react-native";
 
-const apiKey = "AIzaSyADzbOhEGjGuc2vqGDqRo2Vb5OX40txcPk";
+const apiKey = API_KEY;
 
 const months = [
   "Jan",
