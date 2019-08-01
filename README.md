@@ -4,7 +4,7 @@ LearnNow was created to allow users to search two platforms (YouTube and Udemy) 
 
 This mobile application was created using React Native and Expo.
 
-##To use this project:
+## To use this project:
 
     1. Request Affiliate API Key from Udemy.
     2. Request Google Developer YouTube Data API.
