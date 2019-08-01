@@ -68,7 +68,6 @@ const Search = props => {
           setYoutubeRes([]);
           setYoutubeToken("");
           YoutubeSearch(searchTerm).then(res => {
-            console.log(res);
             setYoutubeRes(res.result);
             setYoutubeToken(res.nextPageToken);
           });
@@ -101,7 +100,6 @@ const Search = props => {
         case "youtube":
           MoreYoutubeRes(searchTerm, youtubeToken)
             .then(res => {
-              console.log(res);
               setYoutubeRes(prevState => {
                 return [...prevState, ...res.result];
               });
