@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Keyboard } from "react-native";
+import IOSPicker from "react-native-ios-picker";
 import {
   Dimensions,
   FlatList,
   ActivityIndicator,
   View,
   Picker,
-  Alert
+  Alert,
+  Platform
 } from "react-native";
 import {
   Container,
@@ -14,12 +16,16 @@ import {
   SearchView,
   SearchBox,
   SearchButton,
-  ButtonText
+  ButtonText,
+  IOSPickerView,
+  IOSPickerImg
 } from "./SearchStyled";
 import { UdemySearch, MoreUdemyRes } from "../../Util/CallUdemy";
 import { YoutubeSearch, MoreYoutubeRes } from "../../Util/CallYoutube";
 import UdemyItem from "../List/UdemyItem/Item";
 import YoutubeItem from "../List/YoutubeItem/Item";
+
+const platform = Platform.OS;
 
 const Search = props => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,6 +38,22 @@ const Search = props => {
 
   const searchInputHandler = val => {
     setSearchTerm(val);
+  };
+
+  const iosPickerPrice = val => {
+    switch (val) {
+      case "All":
+        setPrice(null);
+        break;
+      case "Paid":
+        setPrice("price-paid");
+        break;
+      case "Free":
+        setPrice("price-free");
+        break;
+      default:
+        break;
+    }
   };
 
   const getResult = () => {
@@ -111,33 +133,84 @@ const Search = props => {
         </SearchButton>
       </SearchView>
       <OptionView width={Dimensions.get("window").width}>
-        <View style={{ flex: 1, height: 50, flexDirection: "row" }}>
-          <Picker
-            style={{ height: 50, flex: 1 }}
-            selectedValue={source}
-            onValueChange={(val, index) => {
-              setSource(val);
-              if (val === "udemy") {
-                setPrice(null);
-              } else if (val === "youtube") {
-                setPrice("price-free");
-              }
-            }}
-          >
-            <Picker.Item label="Udemy" value="udemy" />
-            <Picker.Item label="YouTube" value="youtube" />
-          </Picker>
-          <Picker
-            style={{ height: 50, flex: 1 }}
-            selectedValue={price}
-            onValueChange={(val, index) => setPrice(val)}
-            enabled={source === "udemy" ? true : false}
-          >
-            <Picker.Item label="Paid" value="price-paid" />
-            <Picker.Item label="Free" value="price-free" />
-            <Picker.Item label="All" value={null} />
-          </Picker>
-        </View>
+        {platform === "ios" ? (
+          <React.Fragment>
+            <IOSPickerView width={Dimensions.get("window").width} right={true}>
+              <IOSPicker
+                mode="modal"
+                data={["Udemy", "YouTube"]}
+                selectedValue={"Udemy"}
+                onValueChange={(val, i) => {
+                  if (val === "YouTube") {
+                    setPrice("price-free");
+                  }
+                  setSource(val.toLowerCase());
+                }}
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: Dimensions.get("window").width / 2
+                }}
+              />
+              <IOSPickerImg
+                source={require("../../../assets/down-arrow.png")}
+              />
+            </IOSPickerView>
+
+            <IOSPickerView width={Dimensions.get("window").width}>
+              {source === "youtube" ? null : (
+                <React.Fragment>
+                  <IOSPicker
+                    mode="modal"
+                    selectedValue={"All"}
+                    data={["All", "Free", "Paid"]}
+                    onValueChange={(val, i) => {
+                      iosPickerPrice(val);
+                    }}
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      width: Dimensions.get("window").width / 2
+                    }}
+                  />
+                  <IOSPickerImg
+                    source={require("../../../assets/down-arrow.png")}
+                  />
+                </React.Fragment>
+              )}
+            </IOSPickerView>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Picker
+              style={{ height: 50, flex: 1 }}
+              selectedValue={source}
+              onValueChange={(val, index) => {
+                setSource(val);
+                if (val === "udemy") {
+                  setPrice(null);
+                } else if (val === "youtube") {
+                  setPrice("price-free");
+                }
+              }}
+            >
+              <Picker.Item label="Udemy" value="udemy" />
+              <Picker.Item label="YouTube" value="youtube" />
+            </Picker>
+            <Picker
+              style={{ height: 50, flex: 1 }}
+              selectedValue={price}
+              onValueChange={(val, index) => setPrice(val)}
+              enabled={source === "udemy" ? true : false}
+            >
+              <Picker.Item label="Paid" value="price-paid" />
+              <Picker.Item label="Free" value="price-free" />
+              <Picker.Item label="All" value={null} />
+            </Picker>
+          </React.Fragment>
+        )}
       </OptionView>
       <View style={{ flex: 1 }}>
         {udemyRes.length !== 0 || udemyRes !== [] ? (
