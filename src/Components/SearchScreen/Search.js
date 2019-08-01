@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Base64 } from "js-base64";
+import { Keyboard } from "react-native";
 import {
   Dimensions,
   FlatList,
@@ -36,6 +35,7 @@ const Search = props => {
   };
 
   const getResult = () => {
+    Keyboard.dismiss();
     if (searchTerm) {
       switch (source) {
         case "udemy":
@@ -111,31 +111,33 @@ const Search = props => {
         </SearchButton>
       </SearchView>
       <OptionView width={Dimensions.get("window").width}>
-        <Picker
-          style={{ height: 50, flex: 1 }}
-          selectedValue={source}
-          onValueChange={(val, index) => {
-            setSource(val);
-            if (val === "udemy") {
-              setPrice(null);
-            } else if (val === "youtube") {
-              setPrice("price-free");
-            }
-          }}
-        >
-          <Picker.Item label="Udemy" value="udemy" />
-          <Picker.Item label="YouTube" value="youtube" />
-        </Picker>
-        <Picker
-          style={{ height: 50, flex: 1 }}
-          selectedValue={price}
-          onValueChange={(val, index) => setPrice(val)}
-          enabled={source === "udemy" ? true : false}
-        >
-          <Picker.Item label="Paid" value="price-paid" />
-          <Picker.Item label="Free" value="price-free" />
-          <Picker.Item label="All" value={null} />
-        </Picker>
+        <View style={{ flex: 1, height: 50, flexDirection: "row" }}>
+          <Picker
+            style={{ height: 50, flex: 1 }}
+            selectedValue={source}
+            onValueChange={(val, index) => {
+              setSource(val);
+              if (val === "udemy") {
+                setPrice(null);
+              } else if (val === "youtube") {
+                setPrice("price-free");
+              }
+            }}
+          >
+            <Picker.Item label="Udemy" value="udemy" />
+            <Picker.Item label="YouTube" value="youtube" />
+          </Picker>
+          <Picker
+            style={{ height: 50, flex: 1 }}
+            selectedValue={price}
+            onValueChange={(val, index) => setPrice(val)}
+            enabled={source === "udemy" ? true : false}
+          >
+            <Picker.Item label="Paid" value="price-paid" />
+            <Picker.Item label="Free" value="price-free" />
+            <Picker.Item label="All" value={null} />
+          </Picker>
+        </View>
       </OptionView>
       <View style={{ flex: 1 }}>
         {udemyRes.length !== 0 || udemyRes !== [] ? (

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Image, Text, StyleSheet } from "react-native";
+import React from "react";
+import { View, Image, Text, StyleSheet, Platform } from "react-native";
 import {
   createSwitchNavigator,
   createStackNavigator,
@@ -10,6 +10,8 @@ import Search from "./src/Components/SearchScreen/Search";
 import UdemyDetail from "./src/Components/UdemyDetail/Detail";
 import Tips from "./src/Components/Tips/Tips";
 import HeaderRight from "./src/Components/Header/Header";
+
+const platform = Platform.OS;
 
 const App = () => {
   return <AppContainer />;
@@ -39,8 +41,8 @@ const LearnNowApp = createStackNavigator({
   UdemyDetailScreen: {
     screen: UdemyDetail,
     navigationOptions: () => ({
-      headerLeft: null,
-      headerTransparent: true
+      headerTransparent: platform === "ios" ? false : true,
+      headerLeft: platform === "ios" ? true : null
     })
   },
   TipsScreen: {

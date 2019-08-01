@@ -1,5 +1,6 @@
 import axios from "axios";
 import { CLIENT_ID, CLIENT_SECRET } from "react-native-dotenv";
+import { Base64 } from "js-base64";
 import { Alert } from "react-native";
 
 const authHeader = {
