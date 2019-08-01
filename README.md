@@ -13,3 +13,7 @@ This mobile application was created using React Native and Expo.
         CLIENT_ID=XXXXXXXXXXXXXXXXXXX [UDEMY]
         CLIENT_SECRET=XXXXXXXXXXXXXXX [UDEMY]
         API_KEY=XXXXXXXXXXXXXXXXXXXXX [YouTube]
+
+## Demo
+
+<img src='https://github.com/AndyLuuuuu/LearnNow/blob/master/demo.gif?raw=true' title='LearnNow Demo' width='300' alt='LearnNow Demo' />
