@@ -42,7 +42,7 @@ const LearnNowApp = createStackNavigator({
     screen: UdemyDetail,
     navigationOptions: () => ({
       headerTransparent: platform === "ios" ? false : true,
-      headerLeft: platform === "ios" ? true : null
+      headerLeft: platform === "ios" ? undefined : null
     })
   },
   TipsScreen: {
