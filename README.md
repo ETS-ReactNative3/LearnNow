@@ -13,6 +13,9 @@ This mobile application was created using React Native and Expo.
         CLIENT_ID=XXXXXXXXXXXXXXXXXXX [UDEMY]
         CLIENT_SECRET=XXXXXXXXXXXXXXX [UDEMY]
         API_KEY=XXXXXXXXXXXXXXXXXXXXX [YouTube]
+    5. Run "npm install" or "yarn install".
+    6. Run "expo start" or "npm start"
+    7. Scan QR code on your mobile phone with the Expo app.
 
 ## Demo
 
